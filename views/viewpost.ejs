@@ -2,39 +2,31 @@
 
 <body>
 
+
+
+    
     <% if (titles.length === 0) { %>
+
         <h1>No posts to display</h1>
+
     <% } else { %>
 
         <div style="text-align: left;">
-            <% for (let i = 0 ; i < titles.length; i++) { %>
-                <h2><%= titles[i] %></h2>
-                <p style="text-align: left;"><%= contents[i] %></p> 
 
-                <div style="display: flex; justify-content: space-between; ">
+            <% for (let i = 0; i < titles.length; i++) { %>
+        
+            <form action="/viewpost/<%= i %>" method="post">
 
-                 
+                <!-- Here, you can dynamically generate the href attribute -->
+                <h2><a href="/viewpost/<%= i %>" role="button" style="text-align: left;">  <%= titles[i] %></a></h2>
+                <p><%= contents[i] %></p> 
 
-                </div>
-
+            </form>
+    
             <% } %>
-
-
-               <!-- Update Form -->
-               <form action="/update" method="POST">
-                <!-- Hidden input to hold post ID -->
-                <input type="hidden" name="postId">
-                <button type="submit" style="background-color: green; width: 250px;">Update</button>
-            </form>
-
-            <!-- Delete Form -->
-            <form action="/delete" method="POST">
-                <!-- Hidden input to hold post ID -->
-                <input type="input" name="postId">
-                <button type="submit" style="background-color: red; width: 250px;">Delete</button>
-            </form>
-            
+    
         </div>
+
     <% } %>
 
 </body>

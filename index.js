@@ -4,9 +4,11 @@ import bodyParser from 'body-parser';
 const app = express();
 const port = 3000;
 
-const titles = [];
-const contents = [];
-const postIds = []; 
+let titles = []; 
+let contents = []; 
+let postIds = [];
+
+const post = 0;
 
 var number = 1;
 var index = 0 ;
@@ -42,8 +44,24 @@ app.post("/write", (req, res) => {
 
 // Rendering viewpost page with post titles and contents
 app.get('/viewpost', (req, res) => {
-    res.render('viewpost.ejs', { titles, contents, postIds });
+
+    const y = post ;
+
+    res.render('viewpost.ejs', { titles, contents, postIds, y});
 });
+
+app.get('/viewpost/:id', (req, res) => {
+    // Convert postId to a number
+    const postId = parseInt(req.params.id);
+    
+    // Check if postId is a valid number and within the range of titles and contents arrays
+    if (postId >= 0 && postId < titles.length && postId < contents.length) {
+        const postTitle = titles[postId];
+        const postContent = contents[postId];
+        res.render('viewpostbyID.ejs', { postTitle, postContent, postId });
+    } 
+});
+
 
 // Handling post update
 app.post("/update", (req, res) => {
@@ -55,17 +73,23 @@ app.post("/update", (req, res) => {
 });
 
 // Handling post deletion
-app.post("/delete", (req, res) => {
+app.post('/viewpost/:id', (req, res) => {
 
     const postIdToDelete = req.body.postId;
 
-    delete titles[postIdToDelete];
-    delete contents[postIdToDelete];
-    delete postIds[postIdToDelete];
+    // Assuming titles, contents, and postIds are arrays
+   
+        // Delete the post with the specified ID from all arrays
+        delete titles[postIdToDelete];
+        delete contents[postIdToDelete];
+        delete postIds[postIdToDelete];
+
+        console.log(`Deleting post with ID: ${postIdToDelete}`);
+
+        res.redirect('/viewpost');
     
-    console.log(`Deleting post with ID: ${postIdToDelete}`);
-    res.redirect('/viewpost');
 });
+
 
 // Function to generate unique post IDs
 function generatePostId() {
