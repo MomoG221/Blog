@@ -2,13 +2,20 @@
 
 <body>
 
+    <% if (titles.length === 0) { %>
+        <h1>No posts to display</h1>
+
+    <% } else { %>
+
     <div style="text-align: left;">
     <% for (let i = 0, m = 1; i < titles.length; i++) { %>
-        <h2 >Post #<%= m++ %></h2>
-        <h3 >Title: <%= titles[i] %></h3>
+        <h2>Post #<%= m++ %></h2>
+        <h3>Title: <%= titles[i] %></h3>
         <p style="text-align: left;">Content: <%= contents[i] %></p> 
         <br>
     <% } %>
+    <% } %>
+
 </div>
 </body>
 

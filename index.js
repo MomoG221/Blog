@@ -4,7 +4,6 @@ import bodyParser from 'body-parser';
 const app = express();
 const port = 3000;
 
-
 const titles = [];
 const contents = [];
 
