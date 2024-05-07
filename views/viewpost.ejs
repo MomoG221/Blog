@@ -1,0 +1,15 @@
+<%- include("partials/header.ejs") %>
+
+<body>
+
+    <div style="text-align: left;">
+    <% for (let i = 0, m = 1; i < titles.length; i++) { %>
+        <h2 >Post #<%= m++ %></h2>
+        <h3 >Title: <%= titles[i] %></h3>
+        <p style="text-align: left;">Content: <%= contents[i] %></p> 
+        <br>
+    <% } %>
+</div>
+</body>
+
+<%- include("partials/footer.ejs") %>
