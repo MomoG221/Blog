@@ -1,24 +1,22 @@
-<%- include("partials/header.ejs") %>
+<%- include("partials/header.ejs") %> <!-- Include header partial -->
 
-
-<h3><%= postTitle %></h3>
-<p><%= postContent %></p> 
+<h3><%= postTitle %></h3> <!-- Render post title -->
+<p><%= postContent %></p> <!-- Render post content -->
 
 <div style="display: flex; justify-content: space-between;">
     <!-- Update Form -->
-    <form action="/update" method="POST">
-     <!-- Hidden input to hold post ID -->
-     <input type="hidden" name="postId">
-     <button type="submit" style="background-color: green; width: 250px;">Update</button>
- </form>
+    <form action="/update/<%= postId %>" method="get"> <!-- Form to update post -->
+        <!-- Hidden input to hold post ID -->
+        <input type="hidden" name="postId" value="<%= postId %>"> <!-- Include postId value -->
+        <button type="submit" style="background-color: green; width: 250px;">Update</button> <!-- Button to submit form for update -->
+    </form>
 
+    <!-- Delete Form -->
+    <form action="/viewpost/<%= postId %>" method="POST"> <!-- Form to delete post -->
+        <!-- Hidden input to hold post ID -->
+        <input type="hidden" name="postId" value="<%= postId %>"> <!-- Include postId value -->
+        <button type="submit" style="background-color: red; width: 250px;">Delete</button> <!-- Button to submit form for deletion -->
+    </form>
+</div>
 
-<!-- Delete Form -->
-<form action="/viewpost/<%= postId %>" method="POST"> <!-- Change method to DELETE -->
-    <!-- Hidden input to hold post ID -->
-    <input type="hidden" name="postId" value="<%= postId %>"> <!-- Include postId value -->
-    <button type="submit" style="background-color: red; width: 250px;">Delete</button>
-</form>
-
-
-<%- include("partials/footer.ejs") %>
+<%- include("partials/footer.ejs") %> <!-- Include footer partial -->

@@ -1,22 +1,12 @@
-<%- include("partials/header.ejs") %>
-    
-        <div class="jumbotron" style="margin-top: 1cm;">
+<%- include("partials/header.ejs") %> <!-- Include header partial -->
 
-            <h1 class="display-4">Welcome to My Blog!</h1>
+<div class="jumbotron" style="margin-top: 1cm;">
+    <!-- Jumbotron with welcome message and introduction -->
+    <h1 class="display-4">Welcome to My Blog!</h1> <!-- Large heading -->
+    <p class="lead">This is a simple blog application created using Node.js and Express.</p> <!-- Lead paragraph -->
+    <hr class="my-4"> <!-- Horizontal rule -->
+    <p>Click the button below to view all posts.</p> <!-- Message prompting to view posts -->
+    <a class="btn btn-primary btn-lg" href="/viewpost" role="button">View Posts</a> <!-- Button to view posts -->
+</div>
 
-            <p class="lead">This is a simple blog application created using Node.js and Express.</p>
-
-            <hr class="my-4">
-
-            <p>Click the button below to view all posts.</p>
-
-            <a class="btn btn-primary btn-lg" href="/viewpost" role="button">View Posts</a>
-
-
-            
-
-
-        </div>
-
-
-  <%- include("partials/footer.ejs") %>
+<%- include("partials/footer.ejs") %> <!-- Include footer partial -->
