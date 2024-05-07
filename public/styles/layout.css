@@ -168,7 +168,7 @@ footer {
   position: relative;
   width: 100%;
   background: #3586ff;
-  padding: 20px 50px;
+  padding: 0px 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -182,7 +182,7 @@ footer .menu {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 footer .social_icon li,
@@ -202,7 +202,7 @@ footer .social_icon li a:hover {
 }
 
 footer .menu li a {
-  font-size: 1em;
+  font-size: 0.75em;
   color: #ccc;
   margin: 0 10px;
   display: inline-block;
@@ -216,7 +216,7 @@ footer .menu li a:hover {
 }
 p {
   color: whtie;
-  text-align: center;
+  text-align: left;
   margin-top: 15px;
   margin-bottom: 10px;
   font-size: 1.1em;

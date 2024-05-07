@@ -4,18 +4,39 @@
 
     <% if (titles.length === 0) { %>
         <h1>No posts to display</h1>
-
     <% } else { %>
 
-    <div style="text-align: left;">
-    <% for (let i = 0, m = 1; i < titles.length; i++) { %>
-        <h2>Post #<%= m++ %> : <%= titles[i] %></h3>
-        <p style="text-align: left;"><%= contents[i] %></p> 
-        <br>
-    <% } %>
+        <div style="text-align: left;">
+            <% for (let i = 0 ; i < titles.length; i++) { %>
+                <h2><%= titles[i] %></h2>
+                <p style="text-align: left;"><%= contents[i] %></p> 
+
+                <div style="display: flex; justify-content: space-between; ">
+
+                 
+
+                </div>
+
+            <% } %>
+
+
+               <!-- Update Form -->
+               <form action="/update" method="POST">
+                <!-- Hidden input to hold post ID -->
+                <input type="hidden" name="postId">
+                <button type="submit" style="background-color: green; width: 250px;">Update</button>
+            </form>
+
+            <!-- Delete Form -->
+            <form action="/delete" method="POST">
+                <!-- Hidden input to hold post ID -->
+                <input type="input" name="postId">
+                <button type="submit" style="background-color: red; width: 250px;">Delete</button>
+            </form>
+            
+        </div>
     <% } %>
 
-</div>
 </body>
 
 <%- include("partials/footer.ejs") %>
