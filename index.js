@@ -20,6 +20,7 @@ app.get('/write', (req, res) => {
     } );
 
 app.post("/write", (req, res)=>{
+    
         const newPostTitle = req.body.posttitle
         const newPostContent = req.body.postbody 
         console.log(newPostTitle) 
