@@ -1,114 +1,164 @@
-// Import necessary modules
-import express from 'express'; // Express framework for building web applications
-import bodyParser from 'body-parser'; // Middleware to parse incoming request bodies
-import methodOverride from 'method-override'; // Middleware to override HTTP methods for PUT and DELETE requests
+import express from "express";
+import bodyParser from "body-parser";
 
-// Create Express app
 const app = express();
-const port = 3000; // Port on which the server will listen
+const port = 4000;
 
-// Middleware setup
-app.use(methodOverride('_method')); // Setup method override middleware
-app.use(express.static('public')); // Serve static files from 'public' directory
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+// In-memory data store
+let posts = [
+    {
+      id: 1,
+      title: "The Global Popularity of Soccer",
+      content:
+        "Soccer, known as football outside North America, is the world's most popular sport, played and watched by millions globally. Originating in England in the mid-19th century, soccer has evolved into a major sport with significant cultural and economic impact.",
+      author: "Jordan Smith",
+      date: "2024-05-17T10:00:00Z",
+    },
+    {
+      id: 2,
+      title: "Understanding Soccer: Basic Rules and Gameplay",
+      content:
+        "In soccer, two teams of 11 players aim to score goals by getting the ball into the opposing team's net. Standard matches last 90 minutes, split into two 45-minute halves, with additional stoppage time added. Key positions include the goalkeeper, defenders, midfielders, and forwards, each with specific roles on the field.",
+      author: "Jordan Smith",
+      date: "2024-05-17T10:30:00Z",
+    },
+    {
+      id: 3,
+      title: "Major Soccer Competitions",
+      content:
+        "The FIFA World Cup, held every four years, is the most prestigious international tournament. The UEFA Champions League is an annual competition among Europe's top club teams. Domestic leagues such as the Premier League, La Liga, Bundesliga, Serie A, and Ligue 1 are among the top leagues worldwide.",
+      author: "Jordan Smith",
+      date: "2024-05-17T11:00:00Z",
+    },
+    {
+      id: 4,
+      title: "Famous Soccer Players Through History",
+      content:
+        "Historic legends like Pelé, Diego Maradona, and Johan Cruyff have left a lasting legacy in soccer. Modern icons such as Lionel Messi, Cristiano Ronaldo, Neymar, and Kylian Mbappé continue to captivate fans. In women's soccer, stars like Marta, Alex Morgan, and Megan Rapinoe have made significant contributions.",
+      author: "Jordan Smith",
+      date: "2024-05-17T11:30:00Z",
+    },
+    {
+      id: 5,
+      title: "Tactical Evolution in Soccer",
+      content:
+        "Soccer tactics have evolved from traditional formations like 4-4-2 to modern variations such as 4-3-3 and 3-5-2. Playing styles like Tiki-taka (short passing and movement), Gegenpressing (high pressing), and counter-attacking strategies showcase the diverse tactical approaches in the game.",
+      author: "Jordan Smith",
+      date: "2024-05-17T12:00:00Z",
+    },
+    {
+      id: 6,
+      title: "The Influence of Technology on Soccer",
+      content:
+        "Technological advancements have significantly impacted soccer. The introduction of VAR (Video Assistant Referee) helps referees with controversial decisions, and goal-line technology ensures accuracy in determining whether the ball has crossed the goal line.",
+      author: "Jordan Smith",
+      date: "2024-05-17T12:30:00Z",
+    },
+    {
+      id: 7,
+      title: "Soccer's Socio-Economic Impact",
+      content:
+        "Soccer generates significant revenue through sponsorships, broadcasting rights, and merchandise. Clubs often have deep-rooted connections with their local communities, fostering a sense of identity and pride. Soccer also plays a role in promoting social cohesion and physical fitness.",
+      author: "Jordan Smith",
+      date: "2024-05-17T13:00:00Z",
+    },
+    {
+      id: 8,
+      title: "The Growth of Women's Soccer",
+      content:
+        "Women's soccer has seen increasing popularity and investment, with significant strides in professional leagues like the NWSL (USA) and WSL (England). Despite challenges such as the gender pay gap, milestones like the USWNT's dominance in the Women's World Cup highlight the sport's growth.",
+      author: "Jordan Smith",
+      date: "2024-05-17T13:30:00Z",
+    },
+    {
+      id: 9,
+      title: "Youth Development and Grassroots Soccer",
+      content:
+        "Youth academies play a crucial role in nurturing young talent, while grassroots programs encourage participation from a young age, promoting physical activity and teamwork. These initiatives are essential for the long-term development and sustainability of soccer.",
+      author: "Jordan Smith",
+      date: "2024-05-17T14:00:00Z",
+    },
+    {
+      id: 10,
+      title: "Future Trends in Soccer",
+      content:
+        "Soccer is expanding into new markets like the USA, China, and India. Sustainability efforts aim to make soccer more environmentally friendly. Technological advancements, such as advanced analytics, training tools, and fan engagement platforms, are set to shape the future of the sport.",
+      author: "Jordan Smith",
+      date: "2024-05-17T14:30:00Z",
+    },
+  ];
+  
 
-// Data storage arrays
-let titles = []; // Array to store post titles
-let contents = []; // Array to store post contents
-let postIds = []; // Array to store post IDs
-var index = 0; // Index to generate unique post IDs
+let lastId = 10;
 
-// Route to render index page
-app.get('/', (req, res) => {
-    res.render('index.ejs'); // Render index page
+// Middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+//Write your code here//
+
+//CHALLENGE 1: GET All posts
+
+app.get("/posts", (req, res) => {
+  res.json(posts);
 });
 
-// Route to render write page
-app.get('/write', (req, res) => {
-    res.render('write.ejs'); // Render write page
+// GET a specific post by id
+app.get("/posts/:id", (req, res) => {
+  const post = posts.find((p) => p.id === parseInt(req.params.id));
+  if (!post) return res.status(404).json({ message: "Post not found" });
+  res.json(post);
 });
 
-// Route to handle form submission for writing a new post
-app.post("/write", (req, res) => {
-    // Extract post title and content from the request body
-    const newPostTitle = "Title: " + req.body.posttitle;
-    const newPostContent = req.body.postbody;
 
-    // Generate a unique ID for the post
-    const postId = generatePostId();
+//CHALLENGE 3: POST a new post
 
-    // Store post data in arrays
-    titles.push(newPostTitle);
-    contents.push(newPostContent);
-    postIds.push(postId);
+app.post("/posts", (req, res) => {
 
-    res.redirect('/'); // Redirect to the index page
+  const newId = lastId += 1;
+
+  const post = {
+    id: newId,
+    title: req.body.title,
+    content: req.body.content,
+    author: req.body.author,
+    date: new Date().toISOString(),
+  }
+
+  lastId = newId;
+  posts.push(post);
+  res.json(post);
+
 });
 
-// Route to render viewpost page with post titles and contents
-app.get('/viewpost', (req, res) => {
-    res.render('viewpost.ejs', { titles, contents, postIds }); // Render viewpost page with data
+//CHALLENGE 4: PATCH a post when you just want to update one parameter
+
+app.patch("/posts/:id", (req, res) => {
+  const post = posts.find((p) => p.id === parseInt(req.params.id));
+  if (!post) return res.status(404).json({ message: "Post not found"});
+
+  if (req.body.title) post.title = req.body.title;
+  if (req.body.content) post.content = req.body.content;
+  if (req.body.author) post.author = req.body.author;
+
+  res.json(post);
+
 });
 
-// Route to render individual post by ID
-app.get('/viewpost/:id', (req, res) => {
-    // Extract post ID from URL params
-    const postId = parseInt(req.params.id);
-    
-    // Check if the postId is valid and within array bounds
-    if (postId >= 0 && postId < titles.length && postId < contents.length) {
-        const postTitle = titles[postId];
-        const postContent = contents[postId];
-        res.render('viewpostbyID.ejs', { postTitle, postContent, postId }); // Render individual post
-    } 
+//CHALLENGE 5: DELETE a specific post by providing the post id.
+
+app.delete("/posts/:id", (req, res) => {
+
+  const index = posts.findIndex((p) => p.id === parseInt(req.params.id));
+  if (index === -1) return res.status(404).json({ message: "Post not found" });
+  
+  posts.splice(index, 1);
+  res.json({ message: "Post deleted" });
+
+
+
 });
 
-// Route to render update page for a specific post
-app.get('/update/:id', (req, res) => {
-    // Extract post ID from URL params
-    const postId = parseInt(req.params.id);
-    
-    // Retrieve post title and content by ID
-    const postTitle = titles[postId];
-    const postContent = contents[postId];
-    
-    // Render update page with post data
-    res.render('update.ejs', { postTitle, postContent, postId });
-});
-
-// Route to handle post update
-app.put("/update/:id", (req, res) => {
-    const postIdToUpdate = req.params.id; // Accessing post ID from URL params
-    const updatedPostTitle = "Title: " + req.body.posttitle;
-    const updatedPostContent = req.body.postbody;
-
-    // Update the titles and contents arrays with the new data
-    titles[postIdToUpdate] = updatedPostTitle;
-    contents[postIdToUpdate] = updatedPostContent;
-
-    console.log(`Updating post with ID: ${postIdToUpdate}`);
-    res.redirect('/viewpost'); // Redirect to viewpost page after update
-});
-
-// Route to handle post deletion
-app.post('/viewpost/:id', (req, res) => {
-    const postIdToDelete = req.body.postId;
-
-    // Delete the post with the specified ID from all arrays
-    delete titles[postIdToDelete];
-    delete contents[postIdToDelete];
-    delete postIds[postIdToDelete];
-
-    console.log(`Deleting post with ID: ${postIdToDelete}`);
-    res.redirect('/viewpost'); // Redirect to viewpost page after deletion
-});
-
-// Function to generate unique post IDs
-function generatePostId() {
-    return index++; // Increment index for each new post
-}
-
-// Start the server
-app.listen(3000, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(port, () => {
+  console.log(`API is running at http://localhost:${port}`);
 });
